@@ -14,7 +14,12 @@ btn_font = pygame.font.SysFont("arial", 50)
 
 buttons=[]
 
-
+def getButton(x,y):
+    for button in buttons:
+        if x>=button[1]-50 and x<=button[1]+50:
+            if y>=button[2]-50 and y<=button[2]+50:
+                return button[5]
+    return None
 
 def draw_window():
     WIN.fill(YELLOW)
@@ -40,7 +45,12 @@ def main():
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_ESCAPE:
                     run=False
-           # if event.type==pygame.MOUSEBUTTONDOWN:
+            if event.type==pygame.MOUSEBUTTONDOWN:
+                x,y=event.pos
+                if getButton(x,y)!=None:
+                    letter=getButton(x,y)-65
+                    if(buttons[letter][4]):
+                        buttons[letter][4]=False
 
 
     pygame.quit()
