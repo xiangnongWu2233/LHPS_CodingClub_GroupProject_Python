@@ -13,6 +13,15 @@ BLACK=(0,0,0)
 btn_font = pygame.font.SysFont("arial", 50)
 
 buttons=[]
+pic=pygame.image.load("Pictures/1.png")
+
+word="Hello"
+hang=1
+
+def check(guess):
+    if(guess.upper() in word.upper()):
+        return True
+    return False
 
 def getButton(x,y):
     for button in buttons:
@@ -27,7 +36,11 @@ def draw_window():
         pygame.draw.circle(WIN,BLUE,(button[1],button[2]),button[3])
         letter = btn_font.render(chr(button[5]), 1, BLACK)
         WIN.blit(letter,(button[1]-letter.get_width()//2,button[2]-letter.get_height()//2))
+    WIN.blit(pic,(400,600))
     pygame.display.update()
+
+def end(win=False):
+    print(1)
 
 def main():
     run=True
@@ -49,8 +62,17 @@ def main():
                 x,y=event.pos
                 if getButton(x,y)!=None:
                     letter=getButton(x,y)-65
-                    if(buttons[letter][4]):
+                    if buttons[letter][4]:
                         buttons[letter][4]=False
+                        if check(letter):
+                            print(1)
+                            end(True)
+                        else:
+                            if hang!=7:
+                                hang+=1
+                            else:
+                                end()
+
 
 
     pygame.quit()
